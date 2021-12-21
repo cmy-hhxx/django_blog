@@ -64,3 +64,24 @@ def article_create(request):
         return render(request, 'articles/create.html', context)
 
 
+def article_delete(request, id):
+    # take out the detailed article
+    article = ArticlePost.objects.get(id=id)
+
+    # delete the article
+    article.delete()
+
+    # return the articles_list
+    return redirect("articles:articles_list")
+
+
+def article_csrf_avoidance_delete(request, id):
+    if request.method == "POST":
+        article = ArticlePost.objects.get(id=id)
+        article.delete()
+        return redirect("articles:articles_list")
+    else:
+        return Httpresponse("仅支持post请求")
+
+
+
