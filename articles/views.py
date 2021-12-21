@@ -83,5 +83,23 @@ def article_csrf_avoidance_delete(request, id):
     else:
         return Httpresponse("仅支持post请求")
 
+def article_update(request, id):
+    # take out the article
+    article = ArticlePost.objects.get(id=id)
 
+    # jude the method
+    if request.method == "POST":
+        article_post_form = ArticlePostForm(data=request.POST)
+        if article_post_form.is_valid():
+            # write the new body
+            article.title = request.POST['title']
+            article.body = request.POST['body']
+            article.save()
+            return redirect("articles:article_detail", id=id)
+        else:
+            return HttpResponse("表单内容有误，请重新填写")
+    else:
+        article_post_form = ArticlePostForm()
+        context = {'article': article, 'article_post_form': article_post_form}
+        return render(request, 'articles/update.html', context)
 
