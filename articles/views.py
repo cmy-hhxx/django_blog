@@ -8,6 +8,7 @@ from .forms import ArticlePostForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 def articles_list(request):
     # take out all the articles
@@ -24,7 +25,7 @@ def articles_list(request):
 
     # load the templates and return context object
     #return render(request, 'articles/list.html', context)
-    if request.GET.get('order') == 'total_views':
+    """if request.GET.get('order') == 'total_views':
         article_list = ArticlePost.objects.all().order_by('-total_views')
         order = 'total_views'
     else:
@@ -37,6 +38,37 @@ def articles_list(request):
 
     # 修改此行
     context = { 'articles': articles, 'order': order }
+
+    return render(request, 'articles/list.html', context)"""
+    search = request.GET.get('search')
+    order = request.GET.get('order')
+    # 用户搜索逻辑
+    if search:
+        if order == 'total_views':
+            # 用 Q对象 进行联合搜索
+            article_list = ArticlePost.objects.filter(
+                    Q(title__icontains=search) |
+                    Q(body__icontains=search)
+                    ).order_by('-total_views')
+        else:
+            article_list = ArticlePost.objects.filter(
+                    Q(title__icontains=search) |
+                    Q(body__icontains=search)
+                    )
+    else:
+        # 将 search 参数重置为空
+        search = ''
+        if order == 'total_views':
+            article_list = ArticlePost.objects.all().order_by('-total_views')
+        else:
+            article_list = ArticlePost.objects.all()
+
+    paginator = Paginator(article_list, 3)
+    page = request.GET.get('page')
+    articles = paginator.get_page(page)
+
+    # 增加 search 到 context
+    context = { 'articles': articles, 'order': order, 'search': search }
 
     return render(request, 'articles/list.html', context)
 
