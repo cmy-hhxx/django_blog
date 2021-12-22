@@ -7,10 +7,17 @@ from django.http import HttpResponse
 from .forms import ArticlePostForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 def articles_list(request):
     # take out all the articles
-    articles = ArticlePost.objects.all()
+    articles_list = ArticlePost.objects.all()
+
+    paginator = Paginator(articles_list, 1)
+
+    page = request.GET.get('page')
+
+    articles = paginator.get_page(page)
 
     # deliver the articles to the templates
     context = {'articles': articles}
