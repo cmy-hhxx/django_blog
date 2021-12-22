@@ -11,19 +11,35 @@ from django.core.paginator import Paginator
 
 def articles_list(request):
     # take out all the articles
-    articles_list = ArticlePost.objects.all()
+    #articles_list = ArticlePost.objects.all()
 
-    paginator = Paginator(articles_list, 1)
+    #paginator = Paginator(articles_list, 1)
 
-    page = request.GET.get('page')
+    #page = request.GET.get('page')
 
-    articles = paginator.get_page(page)
+    #articles = paginator.get_page(page)
 
     # deliver the articles to the templates
-    context = {'articles': articles}
+    #context = {'articles': articles}
 
     # load the templates and return context object
+    #return render(request, 'articles/list.html', context)
+    if request.GET.get('order') == 'total_views':
+        article_list = ArticlePost.objects.all().order_by('-total_views')
+        order = 'total_views'
+    else:
+        article_list = ArticlePost.objects.all()
+        order = 'normal'
+
+    paginator = Paginator(article_list, 3)
+    page = request.GET.get('page')
+    articles = paginator.get_page(page)
+
+    # 修改此行
+    context = { 'articles': articles, 'order': order }
+
     return render(request, 'articles/list.html', context)
+
 
 def article_detail(request, id):
     # take out the resigned article
@@ -100,7 +116,7 @@ def article_csrf_avoidance_delete(request, id):
 def article_update(request, id):
     # take out the article
     article = ArticlePost.objects.get(id=id)
-    
+
     if request.user != article.author:
         return HttpResponse("抱歉，无权修改")
 
