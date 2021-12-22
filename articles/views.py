@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
 from comment.models import Comment
+from .models import ArticleColumn
 
 def articles_list(request):
     # take out all the articles
@@ -120,6 +121,9 @@ def article_create(request):
             new_article.author = User.objects.get(id=request.user.id)
             # new_article.author = User.objects.get(id=1)
 
+            if request.POST['column'] != 'none':
+                new_article.column = ArticleColumn.objects.get(id=request.POST['column'])
+
             #save to the sqllite
             new_article.save()
 
@@ -132,7 +136,9 @@ def article_create(request):
     else:
         article_post_form = ArticlePostForm()
 
-        context = {'article_post_form':article_post_form}
+        columns = ArticleColumn.objects.all()
+
+        context = {'article_post_form':article_post_form,'columns': columns}
 
         return render(request, 'articles/create.html', context)
 
@@ -171,12 +177,17 @@ def article_update(request, id):
             # write the new body
             article.title = request.POST['title']
             article.body = request.POST['body']
+            if request.POST['column'] != 'none':
+                article.column = ArticleColumn.objects.get(id=request.POST['column'])
+            else:
+                article.column = None
             article.save()
             return redirect("articles:article_detail", id=id)
         else:
             return HttpResponse("表单内容有误，请重新填写")
     else:
         article_post_form = ArticlePostForm()
-        context = {'article': article, 'article_post_form': article_post_form}
+        columns = ArticleColumn.objects.all()
+        context = {'article': article, 'article_post_form': article_post_form, 'columns': columns}
         return render(request, 'articles/update.html', context)
 

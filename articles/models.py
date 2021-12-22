@@ -3,6 +3,17 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.urls import reverse
 
+
+class ArticleColumn(models.Model):
+
+    title = models.CharField(max_length=100, blank=True)
+
+    created = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.title
+
+
 class ArticlePost(models.Model):
     # the author of the article, on_delete means the way when the data is deleted
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -22,14 +33,23 @@ class ArticlePost(models.Model):
     # total numbers of views
     total_views = models.PositiveIntegerField(default=0)
 
+    column = models.ForeignKey(
+            ArticleColumn,
+            null=True,
+            blank=True,
+            on_delete=models.CASCADE,
+            related_name='article'
+            )
+
     # internal class , defines the meta data
     class Meta:
         # means the posted articles should be ordered by the time they created reverselly
         ordering = ('-created_time',)
 
+
     # recommended method when this object is called ,return a human readable string
     def __str__(self):
         return self.title
-    
+
     def get_absolute_url(self):
         return reverse('articles:article_detail', args=[self.id])
