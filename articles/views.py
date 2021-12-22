@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .forms import ArticlePostForm
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 def articles_list(request):
     # take out all the articles
@@ -34,6 +35,7 @@ def article_detail(request, id):
     # load the templates and return context object
     return render(request, 'articles/detail.html', context)
 
+@login_required(login_url='/userprofile/login/')
 def article_create(request):
     if request.method == "POST":
         # fill the data into the form
@@ -45,7 +47,8 @@ def article_create(request):
             new_article = article_post_form.save(commit=False)
 
             # assgin author id=1
-            new_article.author = User.objects.get(id=1)
+            new_article.author = User.objects.get(id=request.user.id)
+            # new_article.author = User.objects.get(id=1)
 
             #save to the sqllite
             new_article.save()
