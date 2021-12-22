@@ -81,14 +81,23 @@ def article_detail(request, id):
     article.save(update_fields=['total_views'])
 
     # rendering markdown to html
-    article.body = markdown.markdown(article.body,
+    """article.body = markdown.markdown(article.body,
             extensions=[
                 'markdown.extensions.extra',
                 'markdown.extensions.codehilite',
-                ])
+                'markdown.extensions.TOC',
+                ])"""
+    md = markdown.Markdown(
+        extensions=[
+        'markdown.extensions.extra',
+        'markdown.extensions.codehilite',
+        'markdown.extensions.toc',
+        ]
+    )
+    article.body = md.convert(article.body)
 
     # deliver the article to the templates
-    context = {'article': article}
+    context = {'article': article,'toc': md.toc}
 
     # load the templates and return context object
     return render(request, 'articles/detail.html', context)
