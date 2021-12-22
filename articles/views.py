@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
+from comment.models import Comment
 
 def articles_list(request):
     # take out all the articles
@@ -77,6 +78,8 @@ def article_detail(request, id):
     # take out the resigned article
     article = ArticlePost.objects.get(id=id)
 
+    comments = Comment.objects.filter(article=id)
+
     article.total_views += 1
     article.save(update_fields=['total_views'])
 
@@ -97,7 +100,7 @@ def article_detail(request, id):
     article.body = md.convert(article.body)
 
     # deliver the article to the templates
-    context = {'article': article,'toc': md.toc}
+    context = {'article': article,'toc': md.toc, 'comments': comments}
 
     # load the templates and return context object
     return render(request, 'articles/detail.html', context)

@@ -23,5 +23,6 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('articles/', include('articles.urls', namespace='articles')),
     path('userprofile/', include('userprofile.urls', namespace='userprofile')),
+    path('comment/', include('comment.urls', namespace='comment')),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
