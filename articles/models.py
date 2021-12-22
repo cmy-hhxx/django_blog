@@ -18,6 +18,9 @@ class ArticlePost(models.Model):
     # the update time of the article , auto_now default writes current time
     updated_time = models.DateTimeField(auto_now=True)
 
+    # total numbers of views
+    total_views = models.PositiveIntegerField(default=0)
+
     # internal class , defines the meta data
     class Meta:
         # means the posted articles should be ordered by the time they created reverselly

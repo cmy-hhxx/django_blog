@@ -29,6 +29,9 @@ def article_detail(request, id):
     # take out the resigned article
     article = ArticlePost.objects.get(id=id)
 
+    article.total_views += 1
+    article.save(update_fields=['total_views'])
+
     # rendering markdown to html
     article.body = markdown.markdown(article.body,
             extensions=[
@@ -93,9 +96,13 @@ def article_csrf_avoidance_delete(request, id):
     else:
         return Httpresponse("仅支持post请求")
 
+@login_required(login_url='/userprofile/login/')
 def article_update(request, id):
     # take out the article
     article = ArticlePost.objects.get(id=id)
+    
+    if request.user != article.author:
+        return HttpResponse("抱歉，无权修改")
 
     # jude the method
     if request.method == "POST":
