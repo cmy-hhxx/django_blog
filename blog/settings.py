@@ -125,3 +125,16 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# SMTP服务器，改为你的邮箱的smtp!
+#EMAIL_HOST = 'smtp.163.com'
+# 改为你自己的邮箱名！
+#EMAIL_HOST_USER = '18252507837@163.com'
+# 你的邮箱密码
+#EMAIL_HOST_PASSWORD = '2020hhxxcmY'
+# 发送邮件的端口
+#EMAIL_PORT = 25
+# 是否使用 TLS
+#EMAIL_USE_TLS = True
+# 默认的发件人
+#DEFAULT_FROM_EMAIL = 'cmy的博客 <cmyhhxx@gmail.com>'
