@@ -1,6 +1,7 @@
 <!-- extends表明此页面继承自 base.html 文件 -->
 {% extends "base.html" %}
 {% load static %}
+{% load filters_and_tags %}
 
 <!-- 写入 base.html 中定义的 title -->
 {% block title %}
@@ -100,7 +101,7 @@
                     {{ article.total_views }} 浏览&nbsp;&nbsp;&nbsp;
                 </span>
                 <span style="color: blue;">
-                    {{ article.created_time|date:'Y-m-d' }} 发布&nbsp;&nbsp;&nbsp;
+                    {{ article.created_time|timesince_zh }} 发布&nbsp;&nbsp;&nbsp;
                 </span>
                 <span style="color: darkred;">
                     {{ article.updated_time|date:'Y-m-d' }} 更新

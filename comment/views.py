@@ -26,7 +26,10 @@ def post_comment(request, article_id, parent_comment_id=None):
                 return HttpResponse('200 OK')
 
             new_comment.save()
-            return redirect(article)
+
+            redirect_url = article.get_absolute_url() + '#comment_elem_' + str(new_comment.id)
+
+            return redirect(redirect_url)
         else:
             return HttpResponse("表单内容有误，请重新填写。")
     elif request.method == "GET":

@@ -1,6 +1,8 @@
 <!-- extends表明此页面继承自 base.html 文件 -->
 {% extends "base.html" %}
 {% load static %}
+{% load filters_and_tags %}
+{% show_comments_pub_time article %}
 
 <!-- 写入 base.html 中定义的 title -->
 {% block title %}
