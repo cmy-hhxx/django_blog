@@ -7,5 +7,5 @@ class ArticlePostForm(forms.ModelForm):
         # specify the origin model
         model = ArticlePost
         # define the fields of the forms
-        fields = ('title', 'body')
+        fields = ('title', 'body', 'tags')
 

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.urls import reverse
+from taggit.managers import TaggableManager
 
 
 class ArticleColumn(models.Model):
@@ -32,6 +33,9 @@ class ArticlePost(models.Model):
 
     # total numbers of views
     total_views = models.PositiveIntegerField(default=0)
+
+    # tags of the article
+    tags = TaggableManager(blank=True)
 
     column = models.ForeignKey(
             ArticleColumn,
