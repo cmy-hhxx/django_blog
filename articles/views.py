@@ -11,6 +11,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from comment.models import Comment
 from .models import ArticleColumn
+from comment.forms import CommentForm
 
 def articles_list(request):
     # take out all the articles
@@ -72,7 +73,7 @@ def articles_list(request):
     if order == 'total_views':
         article_list = article_list.order_by('-total_views')
 
-    paginator = Paginator(article_list, 3)
+    paginator = Paginator(article_list, 5)
     page = request.GET.get('page')
     articles = paginator.get_page(page)
 
@@ -112,8 +113,10 @@ def article_detail(request, id):
     )
     article.body = md.convert(article.body)
 
+    comment_form = CommentForm()
+
     # deliver the article to the templates
-    context = {'article': article,'toc': md.toc, 'comments': comments}
+    context = {'article': article,'toc': md.toc, 'comments': comments,'comment_form': comment_form}
 
     # load the templates and return context object
     return render(request, 'articles/detail.html', context)

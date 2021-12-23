@@ -9,7 +9,7 @@
 
 <!-- 写入 base.html 中定义的 content -->
 {% block content %}
-
+<link rel="stylesheet" href="{% static 'prism/prism.css' %}">
 <!-- 文章详情 -->
 <div class="container">
     <div class="row">
@@ -39,11 +39,11 @@
                     <button type="submit">send</button>
                 </form>
             </div>
-        <!-- 文章正文 -->
+            <!-- 文章正文 -->
             <div class="col-12">
                 <p>{{ article.body|safe }}</p>
             </div>
-        
+
             <hr>
             {% if user.is_authenticated %}
             <div>
@@ -58,12 +58,11 @@
                              我也要发言：
                          </strong>
                      </label>
-                     <textarea 
-                            type="text"
-                            class="form-control"
-                            id="body"
-                            name="body"
-                            rows="2"></textarea>
+                     <div>
+                         {{ comment_form.media }}
+                         {{ comment_form.body }}
+                     </div>
+
                  </div>
                  <!-- 提交按钮 -->
                  <button type="submit" class="btn btn-primary ">发送</button>
@@ -91,8 +90,7 @@
                     {{ comment.created|date:"Y-m-d H:i:s" }}
                 </span> 时说：
                 </p>
-                <pre style="font-family: inherit; font-size: 1em;">
-    {{ comment.body }}</pre>
+                <div>{{ comment.body|safe }}</div>
                 {% endfor %}
             </div>
         </div>
@@ -131,4 +129,10 @@
                 })
         }
 </script>
+{% block script %}
+<script>
+    $(".django-ckeditor-widget").removeAttr('style');
+</script>
+<script src="{% static 'ckeditor/ckeditor/plugins/prism/lib/prism/prism_patched.min.js' %}"></script>
+{% endblock script %}
 {% endblock content %}
