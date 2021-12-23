@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'mptt',
     'articles',
     'userprofile',
     'comment',
@@ -145,6 +146,7 @@ EMAIL_USE_TLS = True
 # 默认的发件人
 DEFAULT_FROM_EMAIL = 'cmy的博客 <2644287459@qq.com>'
 
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 CKEDITOR_CONFIGS = {
     # django-ckeditor默认使用default配置
