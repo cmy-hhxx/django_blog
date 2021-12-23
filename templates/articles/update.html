@@ -10,7 +10,7 @@
                 <div class="form-group">
                     <label for="title">文章标题</label>
                     <!-- 在 value 属性中指定文本框的初始值为旧的内容，即 article 对象中的 title 字段 -->
-                    <input type="text" class="form-control" id="title" name="title" value="{{ article.title }}">
+                    <input type="text" style="background:#ffeeb2;" class="form-control" id="title" name="title" value="{{ article.title }}">
                 </div>
 
                 <div class="form-group">
@@ -18,6 +18,7 @@
                     <select class="form-control" 
                             id="column" 
                             name="column"
+                            style="background:#ffeeb2;"
                             >
                             <option value="none">请选择栏目..</option>
                             {% for column in columns %}
@@ -34,7 +35,7 @@
                     <div class="form-group">
                         <label for="body">文章正文</label>
                         <!-- 文本域不需要 value 属性，直接在标签体中嵌入数据即可 -->
-                        <textarea type="text" class="form-control" id="body" name="body" rows="12">{{ article.body }}</textarea>
+                        <textarea type="text" class="form-control" id="body" name="body" rows="26" style="background:transparent url('https://s2.loli.net/2021/12/16/4EYlUOF29bWNBQz.png') no-repeat center center; background-size: 100% 100%;"">{{ article.body }}</textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">完成</button>
             </form>
