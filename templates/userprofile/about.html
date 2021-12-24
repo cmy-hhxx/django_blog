@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} About me {% endblock title %}
+{% block content %}
+<div class="content-body">
+			<div class="container">
+				<div class="row">
+					<main class="col-md-12">
+						<h1 class="page-title">About Me</h1>
+						<article class="post">
+							<div class="entry-content clearfix">
+								<figure class="img-responsive-center">
+									<img class="img-responsive" src="https://i.loli.net/2021/11/27/G3JMi9nt7SP2Iwv.png" alt="cmy">
+								</figure>
+								<p>鼓励和安慰真好，哪怕还没有那么好，也会因为这些肯定努力向前走去，被惦记着也很好，那些一起分享过的斑斓的天，偶尔的生活琐碎，都在重复的说你足够弥足珍贵，感激着这些时刻，让人又生出了许多勇气。</p>
+								<p>提及少年一词，定与平庸相斥。不想学习的时候就闭上眼睛，幻想自己已经考完了，今天出成绩。很抱歉又一次没考上。然后你睁开眼，这是你的新的机会。去发光，而不是被照亮。</p>
+								<div class="height-40px"></div>
+								<h2 class="title text-center">Social</h2>
+								<ul class="social">
+                                    <li class="facebook"><a href="https://github.com/cmy-hhxx"><i class="fab fa-github-square"></i></a></li>
+                                    <li class="twitter"><a href="#"><i class="fab fa-qq"></i></a></li>
+                                    <li class="tumblr"><a href="{% url 'articles:articles_list' %}"><i class="far fa-hand-point-left"></i></a></li>
+								</ul>
+							</div>
+						</article>
+					</main>
+				</div>
+			</div>
+		</div>
+{% endblock content %}

@@ -10,7 +10,20 @@
 
 <!-- 写入 base.html 中定义的 content -->
 {% block content %}
-
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <a role="button" href="{% url 'articles:articles_list' %}"
+                    class="btn btn-sm mb-2 btn-info"> 全部 </a>
+            <a role="button" href="{% url 'articles:articles_list' %}?column=2"
+                    class="btn btn-sm mb-2 btn-success"> django </a>
+            <a role="button" href="{% url 'articles:articles_list' %}?column=1"
+                    class="btn btn-sm mb-2 btn-danger"> python </a>
+            <a role="button" href="{% url 'articles:articles_list' %}?column=3"
+                    class="btn btn-sm mb-2 btn-warning"> 数据结构 </a>
+        </div>
+    </div>
+</div>
 <!-- 定义放置文章标题的div容器 -->
 <div class="container">
     <nav aria-label="breadcrumb">
@@ -57,8 +70,8 @@
         <div class="col-4 mb-4">
             <!-- 栏目 -->
             {% if article.column %}
-                <button type="button" 
-                    class="btn btn-sm mb-2
+            <a role="button" href="{% url 'articles:articles_list' %}?column={{ article.column.id }}"
+                    class="btn btn-sm mb-1
                         {% if article.column.title == 'django' %}
                             btn-success
                         {% elif article.column.title == 'python' %}
@@ -69,12 +82,12 @@
                     "
                 >
                     {{ article.column }}
-                </button>
+                </a>
             {% endif %}
             <!-- 标签 -->
             <span>
                 {% for tag in article.tags.all %}
-                <a href="{% url 'articles:articles_list' %}?tag={{ tag }}" class="badge badge-secondary"> {{ tag }} </a>
+                <a href="{% url 'articles:articles_list' %}" class="badge badge-secondary"> {{ tag }} </a>
                 {% endfor %}
             </span>
             <!-- 标题 -->

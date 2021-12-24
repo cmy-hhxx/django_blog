@@ -96,3 +96,6 @@ def profile_edit(request, id):
         return render(request, 'userprofile/edit.html', context)
     else:
         return HttpResponse("请使用GET或POST请求数据")
+
+def about_me(request):
+    return render(request, 'userprofile/about.html')
