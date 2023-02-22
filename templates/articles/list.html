@@ -10,17 +10,23 @@
 
 <!-- 写入 base.html 中定义的 content -->
 {% block content %}
-<div class="container">
+<div class="container" >
     <div class="row">
         <div class="col-4">
             <a role="button" href="{% url 'articles:articles_list' %}"
                     class="btn btn-sm mb-2 btn-info"> 全部 </a>
-            <a role="button" href="{% url 'articles:articles_list' %}?column=2"
-                    class="btn btn-sm mb-2 btn-success"> django </a>
             <a role="button" href="{% url 'articles:articles_list' %}?column=1"
-                    class="btn btn-sm mb-2 btn-danger"> python </a>
-            <a role="button" href="{% url 'articles:articles_list' %}?column=3"
-                    class="btn btn-sm mb-2 btn-warning"> 数据结构 </a>
+                    class="btn btn-sm mb-2 btn-success"> python </a>
+            <a role="button" href="{% url 'articles:articles_list' %}?column=4"
+                    class="btn btn-sm mb-2 btn-danger"> docker </a>
+            <a role="button" href="{% url 'articles:articles_list' %}?column=5"
+                    class="btn btn-sm mb-2 btn-warning"> linux </a>
+            <a role="button" href="{% url 'articles:articles_list' %}?column=6"
+                    class="btn btn-sm mb-2 btn-primary"> 网络编程 </a>
+            <a role="button" href="{% url 'articles:articles_list' %}?column=7"
+                    class="btn btn-sm mb-2 btn-secondary"> 学习心得 </a>
+
+
         </div>
     </div>
 </div>
@@ -72,12 +78,16 @@
             {% if article.column %}
             <a role="button" href="{% url 'articles:articles_list' %}?column={{ article.column.id }}"
                     class="btn btn-sm mb-1
-                        {% if article.column.title == 'django' %}
+                        {% if article.column.title == 'python' %}
                             btn-success
-                        {% elif article.column.title == 'python' %}
+                        {% elif article.column.title == 'docker' %}
                             btn-danger
-                        {% elif article.column.title == '数据结构' %}
+                        {% elif article.column.title == 'linux' %}
                             btn-warning
+                        {% elif article.column.title == '网络编程' %}
+                            btn-primary
+                        {% elif article.column.title == '学习心得' %}
+                            btn-secondary
                         {% endif %}
                     "
                 >
@@ -103,7 +113,7 @@
             <!-- 摘要 -->
             <div>
                 <p style="color: black;">
-                    {{ article.body|slice:'100' }}...
+                    {{ article.body|safe|slice:'45' }}...
                 </p>
             </div>
             <!-- 注脚 -->
